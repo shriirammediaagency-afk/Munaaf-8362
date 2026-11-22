@@ -1,106 +1,825 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Basic -->
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Master the Market – Beginner's Guide</title>
-  <meta name="description" content="100% free stock market education. Learn chart reading, technical analysis, and risk management. No buy/sell tips. For learning purpose only.">
-  <link rel="canonical" href="https://example.com/">
-
-  <!-- Performance -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRADE WITH MUNAAF — Precision Market Intelligence</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
-
-  <!-- Favicons (optional) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Master the Market – Beginner's Guide">
-  <meta property="og:description" content="Learn charts & risk management. No buy/sell tips. 100% educational.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://example.com/">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop">
-
-  <!-- Minimal CSS (inline for speed) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg1:#0c0c1d;
-      --bg2:#1a1a2b;
-      --brand: #00f0ff;
-      --brand-2:#00f0ff;
-      --text:#ffffff;
-      --muted:#b5b5c3;
+    :root {
+      --bg-dark: #060911;
+      --grid-line: rgba(255, 255, 255, 0.03);
+      --card-bg: #0b0f19;
+      --card-inner: #0e1422;
+      --border-gold: rgba(245, 179, 1, 0.35);
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --gold: #f5b301;
+      --gold-bright: #ffbe0b;
+      --green: #10b981;
+      --green-bright: #1ed794;
+      --red: #ef4444;
+      --cyan: #38bdf8;
+      --text-main: #ffffff;
+      --text-muted: #8b95a5;
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:
-        linear-gradient(135deg, rgba(0,0,0,.45), rgba(0,0,0,.45)),
-        url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1600&auto=format&fit=crop') no-repeat center/cover fixed;
-      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
-      min-height:100vh;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .container{
-      max-width:520px; margin:0 auto; padding:24px 18px; text-align:center; min-height:100vh; display:flex; flex-direction:column; justify-content:center;
-      backdrop-filter: saturate(130%);
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 42px 42px;
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
     }
-    .badge{display:inline-block; font-size:.78rem; padding:6px 10px; border:1px solid #2a2a3a; border-radius:999px; color:#d6eaff; background:rgba(0,240,255,.08); margin-bottom:14px}
-    h1{font-size:1.9rem; line-height:1.2; margin:6px 0 10px; background:linear-gradient(90deg,var(--brand-2),var(--brand)); -webkit-background-clip:text; background-clip:text; color:transparent;}
-    .sub{font-size:1rem; color:var(--muted); margin:0 auto 16px; max-width:36ch}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(0,255,153,.07); border:1px dashed rgba(0,255,153,.35); color:#d8ffe9; font-size:.9rem; margin:6px 0 18px;
+
+    /* Top Live Stock Ticker */
+    .ticker-wrap {
+      width: 100%;
+      background: #080c15;
+      border-bottom: 1px solid var(--border-subtle);
+      overflow: hidden;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      user-select: none;
     }
-    ul.bullets{list-style:none; padding:0; margin:0 0 18px}
-    ul.bullets li{margin:8px 0; color:#e9eef9}
-    .cta{
-      display:inline-block; text-decoration:none; background:var(--brand); color:#041b14; padding:14px 18px; font-weight:700; border-radius:12px; box-shadow:0 0 0 0 rgba(0,255,153,.6); transform:translateZ(0);
-      transition:transform .15s ease;
-      animation:pulse 1.6s infinite;
+
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      animation: tickerScroll 28s linear infinite;
     }
-    .cta:active{transform:scale(.98)}
-    @keyframes pulse{
-      0%{box-shadow:0 0 0 0 rgba(0,255,153,.55)}
-      70%{box-shadow:0 0 0 20px rgba(0,255,153,0)}
-      100%{box-shadow:0 0 0 0 rgba(0,255,153,0)}
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 22px;
     }
-    .fineprint{font-size:.86rem; color:var(--muted); margin:18px auto 0; max-width:44ch}
-    .disclaimer{font-size:.78rem; color:#9aa4b2; margin:18px auto 0; max-width:50ch}
-    .safe{display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; color:#a1ffd6; font-size:.9rem}
-    .shield{width:18px; height:18px; display:inline-block; border-radius:4px; background:linear-gradient(135deg,#0df,#0f9)}
-    footer{opacity:.8; margin-top:22px; font-size:.78rem; color:#9aa4b2}
+
+    .ticker-symbol {
+      color: #e2e8f0;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .ticker-data {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      font-size: 10.5px;
+    }
+
+    .up { color: var(--green-bright); }
+    .down { color: var(--red); }
+
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Main Terminal Container */
+    .main-wrapper {
+      width: 100%;
+      max-width: 470px;
+      padding: 28px 14px 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .terminal-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 25px rgba(245, 179, 1, 0.06);
+      overflow: hidden;
+    }
+
+    /* Terminal Top Header */
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #080b12;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .terminal-title {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #94a3b8;
+      letter-spacing: 0.6px;
+    }
+
+    .status-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #103b32;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      display: inline-block;
+    }
+
+    .window-controls {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .win-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .win-yellow { background: #eab308; }
+    .win-orange { background: #f97316; }
+    .win-red { background: #ef4444; }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 26px 20px 22px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-box-wrap {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .logo-box {
+      width: 78px;
+      height: 78px;
+      border-radius: 18px;
+      background: #0d1320;
+      border: 1.5px solid var(--gold);
+      box-shadow: 0 0 20px rgba(245, 179, 1, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+
+    .pro-badge {
+      position: absolute;
+      bottom: -7px;
+      right: -10px;
+      background: #10b981;
+      color: #04130d;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .brand-title {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      color: #ffffff;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    /* Pills Row */
+    .pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 20px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      letter-spacing: 0.4px;
+    }
+
+    .pill-gold {
+      background: rgba(245, 179, 1, 0.1);
+      border: 1px solid rgba(245, 179, 1, 0.3);
+      color: var(--gold);
+    }
+
+    .pill-red {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      color: #f87171;
+    }
+
+    .pill-cyan {
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--cyan);
+    }
+
+    /* CTA Button */
+    .cta-btn {
+      width: 100%;
+      background: linear-gradient(180deg, #ffbe0b 0%, #f59e0b 100%);
+      color: #090d16;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 25px rgba(245, 179, 1, 0.35);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(245, 179, 1, 0.5);
+    }
+
+    .tg-circle {
+      width: 22px;
+      height: 22px;
+      background: #090d16;
+      color: #ffbe0b;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Stats Row */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: #090d17;
+      padding: 16px 10px;
+      text-align: center;
+    }
+
+    .stat-item:not(:last-child) {
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .stat-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .stat-gold { color: var(--gold); }
+    .stat-white { color: #ffffff; }
+    .stat-green { color: var(--green-bright); }
+
+    .stat-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9.5px;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+    }
+
+    /* Live Pattern Analysis Chart Box */
+    .chart-section {
+      padding: 18px 20px 10px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .chart-title {
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green-bright);
+      box-shadow: 0 0 8px var(--green-bright);
+    }
+
+    .chart-momentum {
+      color: var(--green-bright);
+    }
+
+    .candlestick-box {
+      background: #070a12;
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      height: 82px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .candle {
+      position: relative;
+      width: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wick {
+      width: 2px;
+      position: absolute;
+    }
+
+    .body {
+      width: 9px;
+      border-radius: 1.5px;
+      z-index: 1;
+    }
+
+    .c-red .wick, .c-red .body { background: #ef4444; }
+    .c-green .wick, .c-green .body { background: #1ed794; }
+
+    /* Feature Cards List */
+    .features-section {
+      padding: 12px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .feature-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(245, 179, 1, 0.35);
+      background: #12192b;
+    }
+
+    .feature-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .icon-gold {
+      background: rgba(245, 179, 1, 0.12);
+      color: var(--gold);
+    }
+
+    .icon-green {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--green-bright);
+    }
+
+    .icon-cyan {
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--cyan);
+    }
+
+    .feature-text h3 {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 3px;
+    }
+
+    .feature-text p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    .chevron {
+      color: #475569;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* Footer */
+    .terminal-footer {
+      border-top: 1px solid var(--border-subtle);
+      background: #080b12;
+      padding: 16px 20px 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+
+    .footer-links button {
+      background: none;
+      border: none;
+      color: var(--gold);
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-links button:hover {
+      text-decoration: underline;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: #64748b;
+      letter-spacing: 0.5px;
+    }
+
+    /* Policy Popup Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 999;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #0b0f19;
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      max-width: 420px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.85);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .modal-head h4 {
+      color: var(--gold);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-body {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+    }
   </style>
 </head>
 <body>
-  <main class="container">
-    <span class="badge">100% Educational • Policy Safe</span>
-    <h1>Master the Market – Beginner's Guide</h1>
-    <p class="sub">Master the basics with beginner-friendly lessons</p>
 
-    <div class="pill">🚫 No Buy/Sell Tips • ✅ For Learning Purpose Only</div>
+  <!-- Top Live Stock Ticker -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <!-- Set 1 -->
+      <div class="ticker-item"><span class="ticker-symbol">TCS</span><div class="ticker-data"><span class="up">4,150.00</span><span class="up">+0.80%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">INFY</span><div class="ticker-data"><span class="down">1,880.20</span><span class="down">-0.65%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">TATAMOTORS</span><div class="ticker-data"><span class="up">985.40</span><span class="up">+3.12%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol" style="color:#f5b301;">⚡ NIFTY</span><div class="ticker-data"><span class="up">22,510.40</span><span class="up">+1.35%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">BANKNIFTY</span><div class="ticker-data"><span class="up">48,920.15</span><span class="up">+1.10%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">SENSEX</span><div class="ticker-data"><span class="up">74,120.80</span><span class="up">+0.95%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">RELIANCE</span><div class="ticker-data"><span class="down">2,912.00</span><span class="down">-0.42%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">HDFC BANK</span><div class="ticker-data"><span class="up">1,695.50</span><span class="up">+2.30%</span></div></div>
+      <!-- Set 2 (Seamless Loop) -->
+      <div class="ticker-item"><span class="ticker-symbol">TCS</span><div class="ticker-data"><span class="up">4,150.00</span><span class="up">+0.80%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">INFY</span><div class="ticker-data"><span class="down">1,880.20</span><span class="down">-0.65%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">TATAMOTORS</span><div class="ticker-data"><span class="up">985.40</span><span class="up">+3.12%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol" style="color:#f5b301;">⚡ NIFTY</span><div class="ticker-data"><span class="up">22,510.40</span><span class="up">+1.35%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">BANKNIFTY</span><div class="ticker-data"><span class="up">48,920.15</span><span class="up">+1.10%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">SENSEX</span><div class="ticker-data"><span class="up">74,120.80</span><span class="up">+0.95%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">RELIANCE</span><div class="ticker-data"><span class="down">2,912.00</span><span class="down">-0.42%</span></div></div>
+      <div class="ticker-item"><span class="ticker-symbol">HDFC BANK</span><div class="ticker-data"><span class="up">1,695.50</span><span class="up">+2.30%</span></div></div>
+    </div>
+  </div>
 
-    <ul class="bullets" aria-label="What you'll learn">
-      <li>• Chart basics & risk rules (no return promises)</li>
-      <li>• How to read trends without speculation</li>
-      <li>• Market discipline & common mistakes</li>
-    </ul>
+  <!-- Main Terminal Window -->
+  <div class="main-wrapper">
+    <div class="terminal-card">
+      
+      <!-- Top Bar -->
+      <div class="terminal-header">
+        <div class="terminal-title">
+          <span class="status-dot"></span>
+          <span>TWM_TERMINAL // v3.8</span>
+        </div>
+        <div class="window-controls">
+          <span class="win-dot win-yellow"></span>
+          <span class="win-dot win-orange"></span>
+          <span class="win-dot win-red"></span>
+        </div>
+      </div>
 
-    <!-- CTA goes to a page-specific bridge -->
-    <a class="cta" href="bridge-lp77.html" rel="nofollow">Start Learning</a>
+      <!-- Hero Content -->
+      <div class="hero-section">
+        <div class="logo-box-wrap">
+          <div class="logo-box">
+            <!-- APNA IMAGE URL YAHAN PASTE KAREIN -->
+            <img src="munaaf.jpg" alt="Trade With Munaaf Logo" id="brandLogo" />
+            <svg id="defaultLogoSvg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f5b301" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+              <polyline points="16 7 22 7 22 13"></polyline>
+            </svg>
+          </div>
+          <span class="pro-badge">✓ PRO</span>
+        </div>
 
-    <div class="safe"><span class="shield" aria-hidden="true"></span> Ad Policy Friendly Content</div>
+        <h1 class="brand-title">TRADE WITH MUNAAF</h1>
+        <p class="brand-subtitle">PRECISION MARKET INTELLIGENCE</p>
 
-    <p class="fineprint">We focus on concepts & frameworks suitable for beginners.</p>
-    <p class="disclaimer"><em>This website is for educational purposes only. We do not provide investment, trading, or financial advice.</em></p>
+        <div class="pills-row">
+          <span class="pill pill-gold">👑 VIP STRATEGY</span>
+          <span class="pill pill-red">● LIVE SIGNALS</span>
+          <span class="pill pill-cyan">👥 100K+ MEMBERS</span>
+        </div>
 
-    <footer>© <span id="y"></span> Market Basics Learning Hub</footer>
-  </main>
+        <!-- Telegram CTA Button -->
+        <a href="https://t.me/+Kb2-kFsuVcgwZDU9" target="_blank" rel="noopener noreferrer" class="cta-btn">
+          <span class="tg-circle">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21.9 3.6c-.3-.2-.7-.3-1.1-.1L2.5 10.6c-.4.2-.7.5-.7 1 0 .4.3.8.7.9l4.7 1.5 1.8 5.6c.1.4.4.6.8.7h.2c.3 0 .6-.1.8-.4l2.7-2.8 4.9 3.6c.2.2.5.3.8.3.2 0 .4 0 .6-.1.4-.2.6-.5.7-.9l3.1-15.1c.1-.5-.1-1-.4-1.3zM9.6 14.3l8.6-7.6-6.9 8.7-.3 3.2-1.4-4.3z"/>
+            </svg>
+          </span>
+          <span>JOIN FREE TELEGRAM CHANNEL</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-val stat-gold">98.2%</div>
+          <div class="stat-label">ACCURACY</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val stat-white">100K+</div>
+          <div class="stat-label">TRADERS</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-val stat-green">24/7</div>
+          <div class="stat-label">ANALYSIS</div>
+        </div>
+      </div>
+
+      <!-- Live Pattern Analysis -->
+      <div class="chart-section">
+        <div class="chart-header">
+          <div class="chart-title">
+            <span class="live-dot"></span>
+            <span>LIVE PATTERN ANALYSIS</span>
+          </div>
+          <div class="chart-momentum">▲ +14.8% PROFIT MOMENTUM</div>
+        </div>
+
+        <div class="candlestick-box">
+          <div class="candle c-red" style="height: 46px;"><div class="wick" style="height: 46px;"></div><div class="body" style="height: 28px;"></div></div>
+          <div class="candle c-green" style="height: 58px;"><div class="wick" style="height: 58px;"></div><div class="body" style="height: 36px;"></div></div>
+          <div class="candle c-green" style="height: 42px;"><div class="wick" style="height: 42px;"></div><div class="body" style="height: 24px;"></div></div>
+          <div class="candle c-red" style="height: 48px;"><div class="wick" style="height: 48px;"></div><div class="body" style="height: 30px;"></div></div>
+          <div class="candle c-green" style="height: 54px;"><div class="wick" style="height: 54px;"></div><div class="body" style="height: 34px;"></div></div>
+          <div class="candle c-green" style="height: 64px;"><div class="wick" style="height: 64px;"></div><div class="body" style="height: 44px;"></div></div>
+          <div class="candle c-red" style="height: 36px;"><div class="wick" style="height: 36px;"></div><div class="body" style="height: 20px;"></div></div>
+          <div class="candle c-green" style="height: 16px;"><div class="wick" style="height: 16px;"></div><div class="body" style="height: 12px;"></div></div>
+        </div>
+      </div>
+
+      <!-- Features Stack -->
+      <div class="features-section">
+        <a href="https://t.me/+Kb2-kFsuVcgwZDU9" target="_blank" rel="noopener noreferrer" class="feature-card">
+          <div class="feature-left">
+            <div class="feature-icon icon-gold">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11 2v9H2a9 9 0 0 1 9-9zm2 0a9 9 0 0 1 8.48 12H13V2zm0 13h7.93A9 9 0 0 1 4.07 15H13z"/>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <h3>Nifty &amp; BankNifty Strategy</h3>
+              <p>DAILY ACCURATE BREAKOUT LEVELS</p>
+            </div>
+          </div>
+          <span class="chevron">›</span>
+        </a>
+
+        <a href="https://t.me/+Kb2-kFsuVcgwZDU9" target="_blank" rel="noopener noreferrer" class="feature-card">
+          <div class="feature-left">
+            <div class="feature-icon icon-green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M13 2L3 14h7v8l10-12h-7z"/>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <h3>Real-Time Trade Signals</h3>
+              <p>INSTANT ENTRY &amp; EXIT ALERTS</p>
+            </div>
+          </div>
+          <span class="chevron">›</span>
+        </a>
+
+        <a href="https://t.me/+Kb2-kFsuVcgwZDU9" target="_blank" rel="noopener noreferrer" class="feature-card">
+          <div class="feature-left">
+            <div class="feature-icon icon-cyan">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 14.18L5 13.36V17c0 2.21 3.13 4 7 4s7-1.79 7-4v-3.64l-7 3.82z"/>
+              </svg>
+            </div>
+            <div class="feature-text">
+              <h3>Master Trader Education</h3>
+              <p>PRICE ACTION &amp; RISK MANAGEMENT</p>
+            </div>
+          </div>
+          <span class="chevron">›</span>
+        </a>
+      </div>
+
+      <!-- Footer -->
+      <div class="terminal-footer">
+        <div class="footer-links">
+          <button type="button" onclick="openModal('about')">[ABOUT]</button>
+          <button type="button" onclick="openModal('terms')">[TERMS]</button>
+          <button type="button" onclick="openModal('disclaimer')">[DISCLAIMER]</button>
+          <button type="button" onclick="openModal('contact')">[CONTACT]</button>
+        </div>
+        <div class="footer-bottom">
+          <span>FOR EDUCATIONAL PURPOSES ONLY</span>
+          <span>ADV BY D.A.E.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Popup Modal for Footer Links -->
+  <div class="modal-overlay" id="policyModal" onclick="closeModal(event)">
+    <div class="modal-box" onclick="event.stopPropagation()">
+      <div class="modal-head">
+        <h4 id="modalTitle">INFO</h4>
+        <button type="button" class="modal-close" onclick="forceCloseModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalContent"></div>
+    </div>
+  </div>
 
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    // Auto-show custom logo image if valid URL is added
+    window.addEventListener('DOMContentLoaded', () => {
+      const img = document.getElementById('brandLogo');
+      const svg = document.getElementById('defaultLogoSvg');
+      const src = img ? img.getAttribute('src').trim() : '';
+      if (src !== '' && src !== 'YOUR_IMAGE_URL_HERE') {
+        img.style.display = 'block';
+        if (svg) svg.style.display = 'none';
+      }
+    });
+
+    const modalData = {
+      about: {
+        title: '[ABOUT TRADE WITH MUNAAF]',
+        text: 'Trade With Munaaf is a market research and price action education community focused on Nifty, BankNifty, and Indian equity index structures.'
+      },
+      terms: {
+        title: '[TERMS OF USE]',
+        text: 'All market insights, levels, and chart discussions shared inside our community are strictly for educational and informational purposes. Users are solely responsible for their own trading decisions.'
+      },
+      disclaimer: {
+        title: '[DISCLAIMER]',
+        text: 'We are not SEBI-registered investment advisors. Stock market trading and derivatives involve substantial financial risk. Consult a certified financial advisor before making any investment.'
+      },
+      contact: {
+        title: '[CONTACT US]',
+        text: 'For community support or inquiries, connect directly via our official Telegram channel: https://t.me/+Kb2-kFsuVcgwZDU9'
+      }
+    };
+
+    function openModal(type) {
+      const data = modalData[type];
+      if (!data) return;
+      document.getElementById('modalTitle').textContent = data.title;
+      document.getElementById('modalContent').textContent = data.text;
+      document.getElementById('policyModal').classList.add('active');
+    }
+
+    function forceCloseModal() {
+      document.getElementById('policyModal').classList.remove('active');
+    }
+
+    function closeModal(e) {
+      if (e.target.id === 'policyModal') {
+        forceCloseModal();
+      }
+    }
   </script>
 </body>
 </html>
